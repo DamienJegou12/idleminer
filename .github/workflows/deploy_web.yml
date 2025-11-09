@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       # Utilise une image Docker avec Godot préinstallé (ici version 4.3, ajustez si besoin)
-      image: barichello/godot-ci:4.3
+      image: barichello/godot-ci:4.5
 
     steps:
       # 1. Récupère votre code
