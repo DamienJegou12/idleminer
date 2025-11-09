@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://cekkjqdvu3i1a"]
+
+[ext_resource type="Script" uid="uid://cmuq2ugflx21d" path="res://Scripts/main.gd" id="1_307d1"]
+[ext_resource type="PackedScene" uid="uid://cgs1xvsniynbt" path="res://Scene/panel_charbon.tscn" id="2_wqrvb"]
+[ext_resource type="PackedScene" uid="uid://chmlchjo83o7r" path="res://Scene/panel_or.tscn" id="3_ao8x0"]
+[ext_resource type="PackedScene" uid="uid://dfttyvmak84nk" path="res://Scene/panel_diamant.tscn" id="4_2wwxx"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_307d1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 1156.0
+offset_bottom = 648.0
+
+[node name="LabelRessources" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "rsdatfztafy"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="PanelCharbon" parent="VBoxContainer/HBoxContainer" instance=ExtResource("2_wqrvb")]
+layout_mode = 2
+
+[node name="PanelOr" parent="VBoxContainer/HBoxContainer" instance=ExtResource("3_ao8x0")]
+layout_mode = 2
+
+[node name="PanelDiamant" parent="VBoxContainer/HBoxContainer" instance=ExtResource("4_2wwxx")]
+layout_mode = 2

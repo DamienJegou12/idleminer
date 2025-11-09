@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgs1xvsniynbt"]
+
+[ext_resource type="Script" uid="uid://cfsqf3v5opkic" path="res://Scripts/panel_charbon.gd" id="1_6vtvc"]
+[ext_resource type="PackedScene" uid="uid://bncua6dsl8vaq" path="res://Scene/h_box_container_mineur.tscn" id="2_87ped"]
+
+[node name="PanelCharbon" type="PanelContainer"]
+layout_direction = 1
+anchors_preset = -1
+anchor_left = 0.393
+anchor_right = 0.393
+offset_left = -340.736
+offset_top = 111.0
+offset_right = 0.263977
+offset_bottom = 217.0
+size_flags_vertical = 3
+script = ExtResource("1_6vtvc")
+
+[node name="VBoxContainerAcheté" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="ButtonMinerCharbon" type="Button" parent="VBoxContainerAcheté"]
+layout_mode = 2
+text = "Miner du charbon"
+
+[node name="ButtonVendreCharbon" type="Button" parent="VBoxContainerAcheté"]
+layout_mode = 2
+text = "Vendre 10 charbons pour 10$ "
+
+[node name="ButtonAcheterMineurCharbon" type="Button" parent="VBoxContainerAcheté"]
+layout_mode = 2
+text = "Acheter un mineur (50$ et 10 charbons)"
+
+[node name="HBoxContainerMineur" parent="VBoxContainerAcheté" instance=ExtResource("2_87ped")]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[connection signal="pressed" from="VBoxContainerAcheté/ButtonMinerCharbon" to="." method="_on_button_miner_charbon_pressed"]
+[connection signal="pressed" from="VBoxContainerAcheté/ButtonVendreCharbon" to="." method="_on_button_vendre_charbon_pressed"]
+[connection signal="pressed" from="VBoxContainerAcheté/ButtonAcheterMineurCharbon" to="." method="_on_button_acheter_mineur_charbon_pressed"]

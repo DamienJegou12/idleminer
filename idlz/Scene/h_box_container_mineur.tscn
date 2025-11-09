@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://bncua6dsl8vaq"]
+
+[node name="HBoxContainerMineur" type="HBoxContainer"]
+offset_right = 326.0
+offset_bottom = 40.0
+
+[node name="LabelMineur" type="Label" parent="."]
+layout_mode = 2
+text = "Mineur"
+
+[node name="LabelBonus" type="Label" parent="."]
+layout_mode = 2
+text = "Bonus : 0"

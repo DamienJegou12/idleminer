@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://dfttyvmak84nk"]
+
+[ext_resource type="Script" uid="uid://b8wuhqr7cbahd" path="res://Scene/panel_diamant.gd" id="1_r844y"]
+[ext_resource type="PackedScene" uid="uid://bncua6dsl8vaq" path="res://Scene/h_box_container_mineur.tscn" id="2_vug1h"]
+
+[node name="PanelDiamant" type="PanelContainer"]
+layout_direction = 1
+anchors_preset = -1
+anchor_left = 0.393
+anchor_right = 0.393
+offset_left = -340.736
+offset_top = 111.0
+offset_right = 0.263977
+offset_bottom = 217.0
+size_flags_vertical = 3
+script = ExtResource("1_r844y")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="ButtonMinerDiamant" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Miner du diamant"
+
+[node name="ButtonVendreDiamant" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Vendre 10 d'e diamants pour 30$ "
+
+[node name="ButtonAcheterMineurDiamant" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Acheter un mineur (1000$ et 100 diamant)"
+
+[node name="HBoxContainerMineur" parent="VBoxContainer" instance=ExtResource("2_vug1h")]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[connection signal="pressed" from="VBoxContainer/ButtonMinerDiamant" to="." method="_on_button_miner_diamant_pressed"]
+[connection signal="pressed" from="VBoxContainer/ButtonVendreDiamant" to="." method="_on_button_vendre_diamant_pressed"]
+[connection signal="pressed" from="VBoxContainer/ButtonAcheterMineurDiamant" to="." method="_on_button_acheter_mineur_diamant_pressed"]
