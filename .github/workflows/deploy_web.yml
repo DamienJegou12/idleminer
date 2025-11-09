@@ -1,0 +1,46 @@
+name: Deploy to GitHub Pages
+
+# Déclenche l'action à chaque "push" sur la branche "main"
+on:
+  push:
+    branches: [ main ]
+  # Permet aussi de lancer l'action manuellement depuis l'interface GitHub
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    container:
+      # Utilise une image Docker avec Godot préinstallé (ici version 4.3, ajustez si besoin)
+      image: barichello/godot-ci:4.3
+
+    steps:
+      # 1. Récupère votre code
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Crée le dossier où le jeu sera exporté
+      - name: Setup
+        run: mkdir -v -p build/web
+
+      # 3. Exporte le jeu (UTILISEZ LE NOM EXACT DE VOTRE PRÉRÉGLAGE, ici "Web")
+      - name: Web Build
+        run: godot --headless --verbose --export-release "Web" build/web/index.html
+
+      # 4. Ajoute le fichier indispensable pour GitHub Pages (pour éviter les erreurs 404 sur certains fichiers)
+      - name: Create .nojekyll
+        run: touch build/web/.nojekyll
+
+      # 5. Copie le correctif COI dans le dossier final
+      - name: Copy COI script
+        run: cp coi-serviceworker.js build/web/
+
+      # 6. Déploie le contenu du dossier build/web sur la branche gh-pages
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build/web # Le dossier à déployer
+          branch: gh-pages # La branche où le site sera hébergé
