@@ -28,7 +28,7 @@ jobs:
 
       # 3. Exporte le jeu (UTILISEZ LE NOM EXACT DE VOTRE PRÉRÉGLAGE, ici "Web")
       - name: Web Build
-        run: godot --headless --verbose --export-release "Web" build/web/index.html
+        run: godot --headless --verbose --export-release "Web" --path ./idlz build/web/index.html
 
       # 4. Ajoute le fichier indispensable pour GitHub Pages (pour éviter les erreurs 404 sur certains fichiers)
       - name: Create .nojekyll
