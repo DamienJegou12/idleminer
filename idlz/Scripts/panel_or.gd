@@ -1,6 +1,11 @@
 extends PanelContainer
 
 
+
+func _ready():
+	$VBoxContainerAcheter/ButtonAcheterMine.text = "Acheter la mine (" + str(GameState.COUT_MINE_OR_DOLLARS) + "$)"
+	$"VBoxContainerAcheté/ButtonAcheterMineurOr".text = "Acheter un mineur ("+ str(GameState.COUT_MINEUR_OR_DOLLARS) +"$ et " + str(GameState.COUT_MINEUR_OR_RESSOURCE) + "or)"
+
 func _on_button_miner_or_pressed():
 	# print("Or miné")
 	GameState.gold += 1
@@ -37,10 +42,9 @@ func _on_button_acheter_mineur_or_pressed():
 
 
 func _on_button_acheter_mine_pressed() -> void:
-	pass # Replace with function body.
 	print("Achat de la mine")
-	if GameState.dollars >= 10:
-		GameState.dollars -= 10
+	if GameState.dollars >= GameState.COUT_MINE_OR_DOLLARS:
+		GameState.dollars -= GameState.COUT_MINE_OR_DOLLARS
 		$VBoxContainerAcheter/ButtonAcheterMine.disabled = true
 		$VBoxContainerAcheter.visible = false
 		

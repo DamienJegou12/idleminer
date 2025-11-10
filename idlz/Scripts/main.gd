@@ -7,7 +7,7 @@ extends Control
 func _ready():
 	# Cacher les sections non débloquées au démarrage
 	$VBoxContainer/HBoxContainer/PanelOr.visible = true
-	$VBoxContainer/HBoxContainer/PanelDiamant.visible = false
+	$VBoxContainer/HBoxContainer/PanelDiamant.visible = true
 	
 	# Mettre à jour l'affichage une première fois
 	update_ui()
@@ -20,6 +20,10 @@ func _process(delta):
 	
 	# Ajoutez ici la production d'or et de diamant de la même manière
 	var production_or = GameState.niveau_mineur_or * 0.5
+	GameState.gold += production_or * delta
+	
+	# Ajoutez ici la production d'or et de diamant de la même manière
+	var production_diamant = GameState.niveau_mineur_or * 0.5
 	GameState.gold += production_or * delta
 
 	# Mettre à jour l'affichage

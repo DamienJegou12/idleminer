@@ -15,25 +15,35 @@ offset_bottom = 217.0
 size_flags_vertical = 3
 script = ExtResource("1_r844y")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainerAcheté" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 2
 
-[node name="ButtonMinerDiamant" type="Button" parent="VBoxContainer"]
+[node name="ButtonMinerDiamant" type="Button" parent="VBoxContainerAcheté"]
 layout_mode = 2
 text = "Miner du diamant"
 
-[node name="ButtonVendreDiamant" type="Button" parent="VBoxContainer"]
+[node name="ButtonVendreDiamant" type="Button" parent="VBoxContainerAcheté"]
 layout_mode = 2
 text = "Vendre 10 d'e diamants pour 30$ "
 
-[node name="ButtonAcheterMineurDiamant" type="Button" parent="VBoxContainer"]
+[node name="ButtonAcheterMineurDiamant" type="Button" parent="VBoxContainerAcheté"]
 layout_mode = 2
 text = "Acheter un mineur (1000$ et 100 diamant)"
 
-[node name="HBoxContainerMineur" parent="VBoxContainer" instance=ExtResource("2_vug1h")]
+[node name="HBoxContainerMineur" parent="VBoxContainerAcheté" instance=ExtResource("2_vug1h")]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[connection signal="pressed" from="VBoxContainer/ButtonMinerDiamant" to="." method="_on_button_miner_diamant_pressed"]
-[connection signal="pressed" from="VBoxContainer/ButtonVendreDiamant" to="." method="_on_button_vendre_diamant_pressed"]
-[connection signal="pressed" from="VBoxContainer/ButtonAcheterMineurDiamant" to="." method="_on_button_acheter_mineur_diamant_pressed"]
+[node name="VBoxContainerAcheter" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="ButtonAcheterMine" type="Button" parent="VBoxContainerAcheter"]
+layout_mode = 2
+text = "Acheter la mine (2000$)"
+
+[connection signal="pressed" from="VBoxContainerAcheté/ButtonMinerDiamant" to="." method="_on_button_miner_diamant_pressed"]
+[connection signal="pressed" from="VBoxContainerAcheté/ButtonVendreDiamant" to="." method="_on_button_vendre_diamant_pressed"]
+[connection signal="pressed" from="VBoxContainerAcheté/ButtonAcheterMineurDiamant" to="." method="_on_button_acheter_mineur_diamant_pressed"]
+[connection signal="pressed" from="VBoxContainerAcheter/ButtonAcheterMine" to="." method="_on_button_acheter_mine_pressed"]

@@ -1,46 +1,54 @@
-name: Deploy to GitHub Pages
+name: Deploy Web (Godot 4.5)
 
-# Déclenche l'action à chaque "push" sur la branche "main"
 on:
   push:
-    branches: [ main ]
-  # Permet aussi de lancer l'action manuellement depuis l'interface GitHub
-  workflow_dispatch:
+    branches:
+      - main
 
 permissions:
-  contents: write
+  contents: write  # nécessaire pour publier sur GitHub Pages
 
 jobs:
-  build-and-deploy:
+  export-and-deploy:
     runs-on: ubuntu-latest
-    container:
-      # Utilise une image Docker avec Godot préinstallé (ici version 4.3, ajustez si besoin)
-      image: barichello/godot-ci:4.5
 
     steps:
-      # 1. Récupère votre code
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Crée le dossier où le jeu sera exporté
-      - name: Setup
-        run: mkdir -v -p build/web
+      - name: Set up Godot 4.5 headless and export templates
+        run: |
+          GODOT_VERSION=4.5
+          mkdir -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          
+          echo "⬇️ Downloading Godot Headless..."
+          wget https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip -O godot.zip
+          unzip -q godot.zip
+          mv Godot_v${GODOT_VERSION}-stable_linux.x86_64 /usr/local/bin/godot
+          chmod +x /usr/local/bin/godot
 
-      # 3. Exporte le jeu (UTILISEZ LE NOM EXACT DE VOTRE PRÉRÉGLAGE, ici "Web")
-      - name: Web Build
-        run: godot --headless --verbose --export-release "Web" --path ./idlz build/web/index.html
+          echo "⬇️ Downloading export templates..."
+          wget https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz -O templates.tpz
+          unzip -q templates.tpz -d templates
+          cp -r templates/templates/* ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
 
-      # 4. Ajoute le fichier indispensable pour GitHub Pages (pour éviter les erreurs 404 sur certains fichiers)
-      - name: Create .nojekyll
-        run: touch build/web/.nojekyll
+      - name: Export Web build
+        run: |
+          mkdir -p build/web
+          echo "🚀 Exporting Web version..."
+          godot --headless --export-release "Web" build/web/index.html
+        env:
+          DISPLAY: ":0"
 
-      # 5. Copie le correctif COI dans le dossier final
-      - name: Copy COI script
-        run: cp coi-serviceworker.js build/web/
-
-      # 6. Déploie le contenu du dossier build/web sur la branche gh-pages
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Upload Web build as artifact
+        uses: actions/upload-artifact@v4
         with:
-          folder: build/web # Le dossier à déployer
-          branch: gh-pages # La branche où le site sera hébergé
+          name: godot-web
+          path: build/web
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: build/web
+          publish_branch: gh-pages
